@@ -23,9 +23,9 @@ class CreatePesantrenTable extends Migration
             $table->string('pemilik')->nullable();
             $table->string('tahunberdiri')->nullable();
             $table->string('notelpon');
-            $table->string('luas')->nullable();
-            $table->string('jumlahsantri')->nullable();
-            $table->string('jumlahpengajar')->nullable();
+            $table->integer('luas')->nullable();
+            $table->integer('jumlahsantri')->nullable();
+            $table->integer('jumlahpengajar')->nullable();
         });
     }
 

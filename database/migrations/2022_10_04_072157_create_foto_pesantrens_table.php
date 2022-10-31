@@ -16,8 +16,9 @@ class CreateFotoPesantrensTable extends Migration
         Schema::create('foto_pesantren', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string('img');
+            $table->integer('pembuatid');
             $table->integer('pesantrenid');
+            $table->string('img');
         });
     }
 

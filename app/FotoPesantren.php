@@ -16,4 +16,8 @@ class FotoPesantren extends Model
     public function pesantrens(){
         return $this->belongsTo(Pesantren::class);
     }
+
+    public function users(){
+        return $this->belongsTo(User::class);
+    }
 }
