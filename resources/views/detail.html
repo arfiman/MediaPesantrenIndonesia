@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+
+    <style>
+        .navbar-bg {
+            background-color: rgba(55, 81, 126, 0.90);
+        }
+
+        .overview-bg {
+            background-color: #37517e;
+        }
+
+        .body-bg {
+            background-color: #37517e;
+        }
+
+        .content-bg {
+            background-color: #f3f5fa;
+        }
+
+        .content-bg-2 {
+            background-color: #ffff;
+        }
+
+        .banner {
+            width: 100%;
+            height: 50vh;
+            overflow: hidden;
+            object-fit: cover;
+            /* object-position: top; */
+        }
+
+        .card img {
+            overflow: hidden;
+            object-fit: cover;
+        }
+
+        .card {
+            width: 31%;
+            height: 270px;
+        }
+
+        @media (max-width: 991px) {
+            .card {
+                width: 47%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .card {
+                width: 95%;
+            }
+        }
+
+        .text-blue {
+            color: #37517e;
+        }
+
+        .text-grey {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .rounded-50 {
+            border-radius: 50px;
+        }
+    </style>
+
+</head>
+
+<body class="body-bg">
+
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-md navbar-dark bg-black-transparent shadow-sm navbar-bg text-white">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <!-- {{-- {{ config('app.name', 'Laravel') }} --}} -->
+                    <img src="" alt="IlmuDewantara" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <div class="">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-white @yield('nav-home')" href="/landing">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-white @yield('nav-modul')" href="/modul/list">Modul</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-white @yield('nav-artikel')"
+                                    href="/artikel/list">Artikel</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-white @yield('nav-subscription')"
+                                    href="/subscription">Subscription</a>
+                            </li>
+                            <!-- Authentication Links -->
+                            <!-- @guest -->
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-white" href="{{ route('login') }}">Login</a>
+                            </li>
+                            <!-- @if (Route::has('register')) -->
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-white" href="{{ route('register') }}">Register</a>
+                            </li>
+                            <!-- @endif -->
+                            <!-- @else -->
+                            <li class="nav-item dropdown text-uppercase">
+                                <a id="navbarDropdown" class="nav-link nav-link-white dropdown-toggle" href="#"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item nav-link-white" href="/modul/riwayat">
+                                        Riwayat
+                                    </a>
+                                    <a class="dropdown-item nav-link-white" href="/profil/ubah">
+                                        Profil
+                                    </a>
+                                    <a class="dropdown-item nav-link-white" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                             document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                            <!-- @endguest -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <main>
+        <div class="content-bg">
+            <div class="container py-4">
+                <h2>Pesantren ABC</h2>
+            </div>
+        </div>
+
+        <div class="content-bg-2">
+            <div class="container mx-auto py-5 row">
+                <div class="col-sm-12 col-md-8 pe-5">
+                    <!-- Carousel -->
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="C:\xampp\htdocs\MediaPesantrenIndonesia\public\images\santri.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="C:\xampp\htdocs\MediaPesantrenIndonesia\public\images\santri.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="C:\xampp\htdocs\MediaPesantrenIndonesia\public\images\santri.jpg" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <!-- Description -->
+                    <h3>Informasi Pesantren</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <span><b>Nama Pesantren : </b></span>
+                            <span>Pesantren ABC</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span><b>Provinsi : </b></span>
+                            <span>Jawa Timur</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span><b>Potensi : </b></span>
+                            <span>Peternakan, Perkebunan, Perikanan</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="content-bg-secondary">
+        <div class="container bg-gray pt-5">
+            <div class="row justify-content-around">
+                <div class="col-md-5 mb-3">
+                    <form>
+                        <h5>Leave A Message:</h5>
+                        <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                            <label for="newsletter1" class="visually-hidden">Message</label>
+                            <input id="newsletter1" type="text" class="form-control" placeholder="Leave a message">
+                            <button class="btn btn-primary" type="button">Send</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-6 col-md-2 mb-3">
+                    <h6>IlmuDewantara</h6>
+                    <ul class="nav flex-column text-light" style="font-size: 15px;">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Modules</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">IDe-Watch</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-md-2 mb-3">
+                    <h6>Contact Us</h6>
+                    <ul class="nav flex-column text-light" style="font-size: 15px;">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">+6287712345678</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">+62212345</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-md-2 mb-3" style="font-size: 15px;">
+                    <h6>Connect with us</h6>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Instagram</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Twitter</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Facebook</a>
+                        </li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Tiktok</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column flex-sm-row justify-content-between py-4 border-top">
+                <p>&copy; 2022 IlmuDewantara. All rights reserved.</p>
+                <ul class="list-unstyled d-flex">
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24">
+                                <use xlink:href="#twitter" />
+                            </svg></a></li>
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24">
+                                <use xlink:href="#instagram" />
+                            </svg></a></li>
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24">
+                                <use xlink:href="#facebook" />
+                            </svg></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

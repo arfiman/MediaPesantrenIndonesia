@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UploadController extends Controller
 {
-    //
+    public function tampilkan(){
+        return view('upload');
+    }
 
     public function inputPesantren(Request $request)
     {
@@ -18,7 +20,7 @@ class UploadController extends Controller
             'nama' => 'required',
             'alamat' => 'required',
             'provinsiid' => 'required',
-            'notelp' => 'required',
+            'notelpon' => 'required',
         ]);
 
         // FotoPesantren::create([
@@ -27,46 +29,41 @@ class UploadController extends Controller
         //     'gambar' => $nama_file,
         // ]);
 
-        Pesantren::create([
-            'pembuatid' => Auth::id(),
-            'provinsiid' => $request->provinsiid,
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
-            'pemilik' => $request->pemilik,
-            'tahunberdiri' => $request->tahunberdiri,
-            'notelpon' => $request->notelpon,
-            'luas' => $request->luas,
-            'jumlahsantri' => $request->jumlahsantri,
-            'jumlahpengajar' => $request->jumlahpengajar,
-        ]);
+        $pesantren = new Pesantren;
+        $pesantren->pembuatid = Auth::id();
+        $pesantren->provinsiid = $request->provinsiid;
+        $pesantren->nama = $request->nama;
+        $pesantren->alamat = $request->alamat;
+        $pesantren->pemilik = $request->pemilik;
+        $pesantren->tahunberdiri = $request->tahunberdiri;
+        $pesantren->notelpon = $request->notelpon;
+        $pesantren->luas = $request->luas;
+        $pesantren->jumlahsantri = $request->jumlahsantri;
+        $pesantren->jumlahpengajar = $request->jumlahpengajar;
+        $pesantren->save();
 
-        return redirect()->back();
-    }
+        // Pesantren::create([
+        //     'pembuatid' => Auth::id(),
+        //     'provinsiid' => $request->provinsiid,
+        //     'nama' => $request->nama,
+        //     'alamat' => $request->alamat,
+        //     'pemilik' => $request->pemilik,
+        //     'tahunberdiri' => $request->tahunberdiri,
+        //     'notelpon' => $request->notelpon,
+        //     'luas' => $request->luas,
+        //     'jumlahsantri' => $request->jumlahsantri,
+        //     'jumlahpengajar' => $request->jumlahpengajar,
+        // ]);
 
-    public function uploadFoto($request){
-
-        $this->validate($request, [
-            'nama' => 'required',
-            'alamat' => 'required',
-            'provinsiid' => 'required',
-            'notelp' => 'required',
-        ]);
-
-        // menyimpan data file yang diupload ke variabel $file
-        $img = $request->file('img');
-
-        $filename = $request->nama . "." . $img->getClientOriginalName();
-        $filename = str_replace(" ", "", $filename);
-
-        // isi dengan nama folder tempat kemana file diupload
-        $file_dest = 'gambarpesantren';
-        $img->move($file_dest, $filename);
-
-        FotoPesantren::create([
-            'pembuatid' => Auth::id(),
-            'pesantrenid' => $request->pesantrenid,
-            'img' => $filename
-        ]);
+        foreach ($request->file('images') as $imagefile) {
+            $image = new FotoPesantren;
+            // Still not working
+            $path = $imagefile->store('foto_pesantren');
+            $image->img = $path;
+            $image->pembuatid = Auth::id();
+            $image->pesantrenid = $pesantren->id;
+            $image->save();
+        }
 
         return redirect()->back();
     }

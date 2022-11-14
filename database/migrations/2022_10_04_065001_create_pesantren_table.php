@@ -16,8 +16,8 @@ class CreatePesantrenTable extends Migration
         Schema::create('pesantren', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->integer('pembuatid');
-            $table->integer('provinsiid');
+            $table->unsignedBigInteger('pembuatid');
+            $table->unsignedBigInteger('provinsiid');
             $table->string('nama');
             $table->string('alamat');
             $table->string('pemilik')->nullable();

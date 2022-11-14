@@ -16,8 +16,8 @@ class CreatePotensiPesantrensTable extends Migration
         Schema::create('potensi_pesantren', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->integer('pesantrenid');
-            $table->integer('potensiid');
+            $table->unsignedBigInteger('pesantrenid');
+            $table->unsignedBigInteger('potensiid');
         });
     }
 

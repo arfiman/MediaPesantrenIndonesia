@@ -13,6 +13,24 @@ class Pesantren extends Model
      */
     protected $table = 'pesantren';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'pembuatid',
+        'provinsiid',
+        'nama',
+        'alamat',
+        'pemilik',
+        'tahunberdiri',
+        'notelpon',
+        'luas',
+        'jumlahsantri',
+        'jumlahpengajar'
+    ];
+
     public function potentials(){
         return $this->belongsToMany(Potential::class, 'potensi_pesantren', 'pesantrenid', 'potensiid');
     }
