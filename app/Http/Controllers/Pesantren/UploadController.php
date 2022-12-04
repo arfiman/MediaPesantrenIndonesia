@@ -27,6 +27,7 @@ class UploadController extends Controller
         $provinsi = Province::get();
         $potensi = Potential::get();
         $pesantren = DB::table('pesantren')
+        ->where('pesantren.id', Auth::id())
         ->join('province', 'pesantren.provinsiid', '=', 'province.id')
         ->select('pesantren.id', 'pesantren.nama', 'province.name')
         ->get();

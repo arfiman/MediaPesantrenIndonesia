@@ -24,7 +24,13 @@ class EditController extends Controller
     }
 
     public function tampilkan($id){
-        $pesantren = DB::table('pesantren')->where('id', $id)->first();
+
+        $pesantren = Pesantren::where('id', $id);
+        if (Auth::id() != $pesantren->first()->pembuatid) {
+            return redirect()->back();
+        }
+
+        $pesantren = $pesantren->first();
         $foto = FotoPesantren::where('pesantrenid', $id)->get();
         $potensi_pesantren = DB::table('potensi_pesantren')
         ->select('potential.name')
@@ -50,6 +56,11 @@ class EditController extends Controller
     }
 
     public function update(Request $request){
+
+        $pesantren = Pesantren::where('id', $request->id);
+        if (Auth::id() != $pesantren->first()->pembuatid) {
+            return redirect()->back();
+        }
 
         $pesantren = Pesantren::where('id', $request->id)->first();
         $pesantren->provinsiid = $request->provinsiid;
