@@ -75,7 +75,25 @@
                 </p>
             </div>
             <div class="row col-12 mt-5 ">
-                @foreach ($pesantren as $p)
+                @for ($i=0; $i<count($pesantren); $i++)
+                    <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
+                        @empty($img[$i])
+                            <img src="{{ url('images/santri.jpg') }}" class="card-img-top mx-0" alt="modul card">
+                        @endempty
+                        @isset($img[$i])
+                            <img src="{{ asset('storage/'. $img[$i] ) }}" class="card-img-top mx-0" alt="modul card">
+                        @endisset
+                        <div class="card-body bg-dark bg-gradient text-light">
+                            <h5 class="card-title">{{$pesantren[$i]->nama}}</h5>
+                            <p class="card-text">
+                                {{$pesantren[$i]->name}}
+                            </p>
+                            <a href="/pesantren/view/{{$pesantren[$i]->p_id}}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                @endfor
+
+                {{-- @foreach ($pesantren as $p)
                     <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
                         @empty($p->img)
                             <img src="{{ url('images/santri.jpg') }}" class="card-img-top mx-0" alt="modul card">
@@ -91,18 +109,9 @@
                             <a href="/pesantren/view/{{$p->id}}" class="stretched-link"></a>
                         </div>
                     </div>
-                @endforeach
+                @endforeach --}}
 
-                {{-- <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
-                    <img src="{{ url('images/santri.jpg') }}" class="card-img-top mx-0" alt="modul card">
-                    <div class="card-body bg-dark bg-gradient text-light">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                            of
-                            the card's content.</p>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div> --}}
+
             </div>
 
             <div class="text-center mt-4">

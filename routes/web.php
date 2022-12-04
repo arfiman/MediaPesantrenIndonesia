@@ -27,4 +27,4 @@ Route::post('/pesantren/upload/proses', 'Pesantren\UploadController@inputPesantr
 Route::get('/pesantren/delete/{id}', 'Pesantren\DeleteController@hapusPesantren');
 Route::get('/pesantren/edit/{id}', 'Pesantren\EditController@tampilkan');
 Route::get('/pesantren/deleteFoto/{id}', 'Pesantren\DeleteController@hapusFoto');
-Route::get('/pesantren/edit/update', 'Pesantren\EditController@update');
+Route::post('/pesantren/edit/update', 'Pesantren\EditController@update');

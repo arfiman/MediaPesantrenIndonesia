@@ -13,25 +13,40 @@ use Illuminate\Support\Facades\DB;
 
 class EditController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function tampilkan($id){
-        $pesantren = DB::table('pesantren')->where('pesantren.id', $id)->first();
+        $pesantren = DB::table('pesantren')->where('id', $id)->first();
         $foto = FotoPesantren::where('pesantrenid', $id)->get();
         $potensi_pesantren = DB::table('potensi_pesantren')
         ->select('potential.name')
         ->where('potensi_pesantren.pesantrenid', $id)
         ->join('potential', 'potensi_pesantren.potensiid', '=', 'potential.id')
-        ->get()['name'];
+        ->get();
+
+        $potensi_pesantren_arr = [];
+        foreach($potensi_pesantren as $pp){
+            array_push($potensi_pesantren_arr, $pp->name);
+        }
 
         $provinsi = Province::get();
         $potensi = Potential::get();
 
         foreach ($potensi as $pot) {
-            if(in_array($pot->name, $potensi_pesantren)){
+            if(in_array($pot->name, $potensi_pesantren_arr)){
                 $pot['checked'] = true;
             }
         }
 
-        return view('edit', ['provinsi'=>$provinsi, 'potensi'=>$potensi, 'pesantren'=>$pesantren, 'foto'=>$foto]);
+        return view('edit', ['provinsi'=>$provinsi, 'potensi'=>$potensi, 'pesantren'=>$pesantren, 'foto'=>$foto, 'potensi_pesantren'=>$potensi_pesantren]);
     }
 
     public function update(Request $request){
@@ -48,7 +63,7 @@ class EditController extends Controller
         $pesantren->jumlahpengajar = $request->jumlahpengajar;
         $pesantren->save();
 
-        Potential::get()->potensi_pesantren()->detach($request->id);
+        DB::table('potensi_pesantren')->where('pesantrenid', $pesantren->id)->delete();
 
         $potentials = Potential::get();
         foreach ($potentials as $potential){

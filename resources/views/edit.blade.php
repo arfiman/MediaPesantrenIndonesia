@@ -7,7 +7,6 @@
             <h2 class="text-center my-5">Upload Data Pesantren</h2>
 
             <div class="col-md-7 mx-auto my-5">
-
                 <form action="/pesantren/edit/update" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="number" name="id" value="{{$pesantren->id}}" hidden>
@@ -98,7 +97,7 @@
                         <input class="form-control" type="file" name="images[]" id="images" multiple>
                     </div>
                     <br>
-                    <input type="submit" value="Upload" class="btn btn-primary">
+                    <input type="submit" value="Save" class="btn btn-primary">
                 </form>
 
             </div>
@@ -122,7 +121,7 @@
                                 </tr>
                                 @foreach ($foto as $f)
                                     <tr>
-                                        <td><img src="{{ asset('foto_pesantren/'.$f->img) }}" alt=""></td>
+                                        <td><img class="img" width="300" src="{{ asset('storage/'.$f->img) }}" alt=""></td>
                                         <td>
                                             <a class="btn btn-danger" href="/pesantren/deleteFoto/{{$f->id}}">Hapus</a>
                                         </td>

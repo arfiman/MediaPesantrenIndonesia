@@ -21,13 +21,20 @@ class ViewController extends Controller
     }
 
     public function tampilkan() {
-        $pesantren = $pesantren = DB::table('pesantren')
+        $pesantren = DB::table('pesantren')
+        ->get();
+
+        $pesantrenview = DB::table('pesantren')
+        ->select('pesantren.id as p_id', 'pesantren.nama', 'province.name')
         ->join('province', 'pesantren.provinsiid', '=', 'province.id')
         ->get();
+
+        $img = [];
         foreach ($pesantren as $p) {
-            $p['img'] = DB::table('foto_pesantren')->where("pesantrenid", '=', $p->id)->first()->img;
+            $strtemp = DB::table('foto_pesantren')->where("pesantrenid", '=', $p->id)->first()->img;
+            array_push($img, $strtemp);
         }
-        return view('pesantren', ['pesantren'=>$pesantren]);
+        return view('pesantren', ['pesantren'=>$pesantrenview, 'img'=>$img]);
     }
 
     public function pencarian(Request $request){

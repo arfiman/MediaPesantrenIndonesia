@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pesantren;
 use App\Potential;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class DeleteController extends Controller
@@ -17,9 +18,9 @@ class DeleteController extends Controller
             Storage::delete($foto->img);
         }
 
+        DB::table('potensi_pesantren')->where('pesantrenid', $id)->delete();
         FotoPesantren::where('pesantrenid', $id)->delete();
         Pesantren::where('id', $id)->delete();
-        Potential::get()->potensi_pesantren()->detach($id);
 
         return redirect()->back();
     }

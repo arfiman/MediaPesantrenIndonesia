@@ -19,12 +19,19 @@ class HomeController extends Controller
     {
         $pesantren = DB::table('pesantren')
         ->take(3)
+        ->get();
+
+        $pesantrenview = DB::table('pesantren')
+        ->select('pesantren.id as p_id', 'pesantren.nama', 'province.name')
+        ->take(3)
         ->join('province', 'pesantren.provinsiid', '=', 'province.id')
         ->get();
 
+        $img = [];
         foreach ($pesantren as $p) {
-            $p['img'] = DB::table('foto_pesantren')->where("pesantrenid", '=', $p->id)->first()->img;
+            $strtemp = DB::table('foto_pesantren')->where("pesantrenid", '=', $p->id)->first()->img;
+            array_push($img, $strtemp);
         }
-        return view('home', ['pesantren'=>$pesantren]);
+        return view('home', ['pesantren'=>$pesantrenview, 'img'=>$img]);
     }
 }
