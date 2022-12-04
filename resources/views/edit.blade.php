@@ -8,15 +8,15 @@
 
             <div class="col-md-7 mx-auto my-5">
 
-                <form action="/pesantren/upload/proses" method="POST" enctype="multipart/form-data">
+                <form action="/pesantren/edit/update" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
-
+                    <input type="number" name="id" value="{{$pesantren->id}}" hidden>
                     <div class="form-group">
                         <label for="nama" class="form-label">
                             <b class="">Nama Pesantren*</b>
                         </label>
                         <br>
-                        <input class="form-control" type="text" name="nama" id="nama">
+                        <input class="form-control" type="text" name="nama" id="nama" value="{{$pesantren->nama}}">
                     </div>
                     <br>
                     <div class="form-group">
@@ -25,7 +25,7 @@
                         </label>
                         <select class="form-select" aria-label="Default select example" name="provinsiid" id="provinsi">
                             @foreach ($provinsi as $prov)
-                                <option value="{{$prov->id}}">{{$prov->name}}</option>
+                                <option value="{{$prov->id}}" @if ($prov->id == $pesantren->provinsiid) selected @endif>{{$prov->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -35,7 +35,7 @@
                             <b class="">Alamat Pesantren*</b>
                         </label>
                         <br>
-                        <input class="form-control" type="text" name="alamat" id="alamat">
+                        <input class="form-control" type="text" name="alamat" id="alamat" value="{{$pesantren->alamat}}">
                     </div>
                     <br>
                     <div class="form-group">
@@ -43,7 +43,7 @@
                             <b class="">Nomor Telepon Kontak*</b>
                         </label>
                         <br>
-                        <input class="form-control" type="text" name="notelpon" id="notelpon">
+                        <input class="form-control" type="text" name="notelpon" id="notelpon" value="{{$pesantren->notelpon}}">
                     </div>
                     <br>
                     <div class="form-group">
@@ -53,7 +53,7 @@
 
                         @foreach ($potensi as $pot)
                             <br>
-                            <input class="form-check-input" type="checkbox" name="{{ $pot->name }}" value="{{ $pot->name }}" id="{{ $pot->name }}">
+                            <input class="form-check-input" type="checkbox" name="{{ $pot->name }}" value="{{ $pot->name }}" id="{{ $pot->name }}" @if($pot->checked) checked @endif>
                             <label for="Perkebunan">{{ $pot->name }}</label>
                         @endforeach
                     </div>
@@ -63,7 +63,7 @@
                             <b class="">Pemilik Pesantren</b>
                         </label>
                         <br>
-                        <input class="form-control" type="text" name="pemilik" id="pemilik">
+                        <input class="form-control" type="text" name="pemilik" id="pemilik" value="{{$pesantren->pemilik}}">
                     </div>
                     <br>
                     <div class="form-group">
@@ -71,7 +71,7 @@
                             <b class="">Tahun Berdiri</b>
                         </label>
                         <br>
-                        <input class="form-control" type="text" name="tahunberdiri" id="tahunberdiri">
+                        <input class="form-control" type="text" name="tahunberdiri" id="tahunberdiri" value="{{$pesantren->tahunberdiri}}">
                     </div>
                     <br>
                     <div class="form-group">
@@ -79,7 +79,7 @@
                             <b class="">Jumlah Santri</b>
                         </label>
                         <br>
-                        <input class="form-control" type="text" name="jumlahsantri" id="jumlahsantri">
+                        <input class="form-control" type="text" name="jumlahsantri" id="jumlahsantri" value="{{$pesantren->jumlahsantri}}">
                     </div>
                     <br>
                     <div class="form-group">
@@ -87,7 +87,7 @@
                             <b class="">Jumlah Pengajar</b>
                         </label>
                         <br>
-                        <input class="form-control" type="text" name="jumlahpengajar" id="jumlahpengajar">
+                        <input class="form-control" type="text" name="jumlahpengajar" id="jumlahpengajar" value="{{$pesantren->jumlahpengajar}}">
                     </div>
                     <br>
                     <div class="form-group">
@@ -103,37 +103,40 @@
 
             </div>
 
-            <div id="modul-terupload" class="content-bg py-5">
-                <div class="container px-auto">
-                    <div class="mb-5">
-                        &nbsp;
-                        <h2 class="">
-                            <b>Data Pesantren yang Sudah Anda Upload</b>
-                        </h2>
+            <div class="content-bg py-5">
+                <br>
+                <div class="form-group">
+                    <div id="modul-terupload" class="">
+                        <div class="container px-auto">
+                            <div class="mb-5">
+                                &nbsp;
+                                <h2 class="">
+                                    <b>Foto Pesantren</b>
+                                </h2>
+                            </div>
+
+                            <table class="table text-center">
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Pilihan</th>
+                                </tr>
+                                @foreach ($foto as $f)
+                                    <tr>
+                                        <td><img src="{{ asset('foto_pesantren/'.$f->img) }}" alt=""></td>
+                                        <td>
+                                            <a class="btn btn-danger" href="/pesantren/deleteFoto/{{$f->id}}">Hapus</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </table>
+
+                        </div>
+
                     </div>
-
-                    <table class="table text-center">
-                        <tr>
-                            <th>Nama Pesantren</th>
-                            <th>Provinsi</th>
-                            <th>Pilihan</th>
-                        </tr>
-                            @foreach ($pesantren as $p)
-                            <tr>
-                                <td>{{$p->nama}}</td>
-                                <td>{{$p->name}}</td>
-                                <td>
-                                    <a class="btn btn-primary" href="/pesantren/edit/{{$p->id}}">Edit</a>
-
-                                    <a class="btn btn-danger" href="/pesantren/delete/{{$p->id}}">Hapus</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                    </table>
-
                 </div>
-
             </div>
+
         </div>
     </div>
 @endsection

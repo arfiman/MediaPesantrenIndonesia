@@ -11,39 +11,32 @@ use App\Province;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class UploadController extends Controller
+class EditController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    public function tampilkan($id){
+        $pesantren = DB::table('pesantren')->where('pesantren.id', $id)->first();
+        $foto = FotoPesantren::where('pesantrenid', $id)->get();
+        $potensi_pesantren = DB::table('potensi_pesantren')
+        ->select('potential.name')
+        ->where('potensi_pesantren.pesantrenid', $id)
+        ->join('potential', 'potensi_pesantren.potensiid', '=', 'potential.id')
+        ->get()['name'];
 
-    public function tampilkan(){
         $provinsi = Province::get();
         $potensi = Potential::get();
-        $pesantren = DB::table('pesantren')
-        ->join('province', 'pesantren.provinsiid', '=', 'province.id')
-        ->select('pesantren.id', 'pesantren.nama', 'province.name')
-        ->get();
-        return view('upload', ['provinsi'=>$provinsi, 'potensi'=>$potensi, 'pesantren'=>$pesantren]);
+
+        foreach ($potensi as $pot) {
+            if(in_array($pot->name, $potensi_pesantren)){
+                $pot['checked'] = true;
+            }
+        }
+
+        return view('edit', ['provinsi'=>$provinsi, 'potensi'=>$potensi, 'pesantren'=>$pesantren, 'foto'=>$foto]);
     }
 
-    public function inputPesantren(Request $request)
-    {
-        $this->validate($request, [
-            'nama' => 'required',
-            'alamat' => 'required',
-            'provinsiid' => 'required',
-            'notelpon' => 'required',
-        ]);
+    public function update(Request $request){
 
-        $pesantren = new Pesantren;
-        $pesantren->pembuatid = Auth::id();
+        $pesantren = Pesantren::where('id', $request->id)->first();
         $pesantren->provinsiid = $request->provinsiid;
         $pesantren->nama = $request->nama;
         $pesantren->alamat = $request->alamat;
@@ -55,6 +48,7 @@ class UploadController extends Controller
         $pesantren->jumlahpengajar = $request->jumlahpengajar;
         $pesantren->save();
 
+        Potential::get()->potensi_pesantren()->detach($request->id);
 
         $potentials = Potential::get();
         foreach ($potentials as $potential){
@@ -77,5 +71,4 @@ class UploadController extends Controller
 
         return redirect()->back();
     }
-
 }

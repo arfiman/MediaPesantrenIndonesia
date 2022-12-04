@@ -13,7 +13,7 @@ class Potential extends Model
      */
     protected $table = 'potential';
 
-    public function pesantrens(){
+    public function potensi_pesantren(){
         return $this->belongsToMany(Potential::class, 'potensi_pesantren', 'potensiid', 'pesantrenid');
     }
 }

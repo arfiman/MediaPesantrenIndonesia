@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\FotoPesantren;
+use App\Pesantren;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -23,6 +17,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $pesantren = DB::table('pesantren')
+        ->take(3)
+        ->join('province', 'pesantren.provinsiid', '=', 'province.id')
+        ->get();
+
+        foreach ($pesantren as $p) {
+            $p['img'] = DB::table('foto_pesantren')->where("pesantrenid", '=', $p->id)->first()->img;
+        }
+        return view('home', ['pesantren'=>$pesantren]);
     }
 }

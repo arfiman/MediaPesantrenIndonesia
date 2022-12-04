@@ -10,7 +10,7 @@
                 </p>
 
                 <div class="pt-4">
-                    <button class="btn btn-warning">Temukan Pesantren Sekarang!</button>
+                    <a class="btn btn-warning" href="/pesantren">Temukan Pesantren Sekarang!</a>
                 </div>
             </div>
             <div class="col-md-1"></div>
@@ -74,9 +74,26 @@
                     Data dan potensi yang kami kurasi sepenuh hati
                 </p>
             </div>
-
             <div class="row col-12 mt-5 ">
-                <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
+                @foreach ($pesantren as $p)
+                    <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
+                        @empty($p->img)
+                            <img src="{{ url('images/santri.jpg') }}" class="card-img-top mx-0" alt="modul card">
+                        @endempty
+                        @isset($p->img)
+                            <img src="{{ asset('foto_pesantren/'. $p->img ) }}" class="card-img-top mx-0" alt="modul card">
+                        @endisset
+                        <div class="card-body bg-dark bg-gradient text-light">
+                            <h5 class="card-title">{{$p->nama}}</h5>
+                            <p class="card-text">
+                                {{$p->name}}
+                            </p>
+                            <a href="/pesantren/view/{{$p->id}}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                @endforeach
+
+                {{-- <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
                     <img src="{{ url('images/santri.jpg') }}" class="card-img-top mx-0" alt="modul card">
                     <div class="card-body bg-dark bg-gradient text-light">
                         <h5 class="card-title">Card title</h5>
@@ -85,31 +102,11 @@
                             the card's content.</p>
                         <a href="#" class="stretched-link"></a>
                     </div>
-                </div>
-                <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
-                    <img src="{{ url('images/santri.jpg') }}" class="card-img-top mx-0" alt="modul card">
-                    <div class="card-body bg-dark bg-gradient text-light">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                            of
-                            the card's content.</p>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
-                <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
-                    <img src="{{ url('images/santri.jpg') }}" class="card-img-top mx-0" alt="modul card">
-                    <div class="card-body bg-dark bg-gradient text-light">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                            of
-                            the card's content.</p>
-                        <a href="#" class="stretched-link"></a>
-                    </div>
-                </div>
+                </div> --}}
             </div>
 
             <div class="text-center mt-4">
-                <a class="btn btn-primary" href="/modul/list">Lihat Modul Lainnya</a>
+                <a class="btn btn-primary" href="/pesantren">Lihat Modul Lainnya</a>
             </div>
         </div>
 

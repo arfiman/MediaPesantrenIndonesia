@@ -31,7 +31,7 @@ class Pesantren extends Model
         'jumlahpengajar'
     ];
 
-    public function potentials(){
+    public function potensi_pesantren(){
         return $this->belongsToMany(Potential::class, 'potensi_pesantren', 'pesantrenid', 'potensiid');
     }
 

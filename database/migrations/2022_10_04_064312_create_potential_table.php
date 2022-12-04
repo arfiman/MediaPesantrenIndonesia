@@ -20,14 +20,14 @@ class CreatePotentialTable extends Migration
             $table->string('name');
         });
 
-        DB::table('potential')->insert(
+        DB::table('potential')->insert([
             ['name'=>'Perkebunan'],
             ['name'=>'Perikanan'],
             ['name'=>'Peternakan'],
             ['name'=>'Pertanian'],
             ['name'=>'Kerajinan'],
             ['name'=>'Wisata']
-        );
+        ]);
     }
 
     /**
