@@ -62,6 +62,13 @@ class EditController extends Controller
             return redirect()->back();
         }
 
+        $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'provinsiid' => 'required',
+            'notelpon' => 'required',
+        ]);
+
         $pesantren = Pesantren::where('id', $request->id)->first();
         $pesantren->provinsiid = $request->provinsiid;
         $pesantren->nama = $request->nama;

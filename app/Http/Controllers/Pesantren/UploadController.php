@@ -36,7 +36,7 @@ class UploadController extends Controller
 
     public function inputPesantren(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'nama' => 'required',
             'alamat' => 'required',
             'provinsiid' => 'required',

@@ -6,6 +6,8 @@ use App\FotoPesantren;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Pesantren;
+use App\Potential;
+use App\Province;
 use Illuminate\Support\Facades\DB;
 
 class ViewController extends Controller
@@ -20,11 +22,19 @@ class ViewController extends Controller
         $this->middleware('auth');
     }
 
-    public function tampilkan() {
+    public function tampilkan(Request $request) {
+
+        $keyword = $request->keyword;
+        $provinsiid = $request->prov;
+
         $pesantren = DB::table('pesantren')
+        ->where('nama', 'like', "%".$keyword."%")
+        ->where('provinsiid', '=', $provinsiid)
         ->get();
 
         $pesantrenview = DB::table('pesantren')
+        ->where('nama', 'like', "%".$keyword."%")
+        ->where('provinsiid', '=', $provinsiid)
         ->select('pesantren.id as p_id', 'pesantren.nama', 'province.name')
         ->join('province', 'pesantren.provinsiid', '=', 'province.id')
         ->get();
@@ -34,15 +44,10 @@ class ViewController extends Controller
             $strtemp = DB::table('foto_pesantren')->where("pesantrenid", '=', $p->id)->first()->img;
             array_push($img, $strtemp);
         }
-        return view('pesantren', ['pesantren'=>$pesantrenview, 'img'=>$img]);
-    }
 
-    public function pencarian(Request $request){
-        $keyword = $request->keyword;
-        $hasil = Pesantren::where('nama', 'like', "%".$keyword."%");
-        foreach ($hasil as $p) {
-            $p['img'] = FotoPesantren::where("pesantrenid", '=', $p->id)->first()->img;
-        }
-        return view('pesantren', ['pesantren'=>$hasil]);
+        $provinsi = Province::get();
+        // $potensi = Potential::get();
+
+        return view('pesantren', ['pesantren'=>$pesantrenview, 'img'=>$img, 'provinsi'=>$provinsi]);
     }
 }

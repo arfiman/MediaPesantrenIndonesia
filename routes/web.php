@@ -19,7 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pesantren', 'Pesantren\ViewController@tampilkan');
-Route::post('/pesantren/cari', 'Pesantren\ViewController@pencarian');
 Route::get('/pesantren/view/{id}', 'Pesantren\DetailController@tampilkan');
 
 Route::get('/pesantren/upload', 'Pesantren\UploadController@tampilkan');
