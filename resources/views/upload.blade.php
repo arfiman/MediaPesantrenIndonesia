@@ -130,6 +130,9 @@
                             </tr>
                             @endforeach
                     </table>
+                    <div class="d-flex justify-content-center">
+                        {{ $pesantren->links() }}
+                    </div>
 
                 </div>
 

@@ -14,7 +14,7 @@
                             <div class="input-group mb-3 search d-flex">
                                 <input type="text" name="keyword" class="form-control rounded-0 rounded-start"
                                     placeholder="Cari Pesantren" aria-label="Recipient's username"
-                                    aria-describedby="basic-addon2">
+                                    aria-describedby="basic-addon2" value="{{ $keyword }}">
                                 <button class="btn text-bg-secondary btn-outline-secondary rounded-0 rounded-end"
                                     type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
 
@@ -24,7 +24,7 @@
                             <div class="input-group">
                                 <select class="form-select" aria-label="Default select example" name="prov" id="provinsi">
                                     @foreach ($provinsi as $prov)
-                                        <option value="{{$prov->id}}">{{$prov->name}}</option>
+                                        <option value="{{$prov->id}}" @if($prov->id == $provinsiid) selected @endif>{{$prov->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -57,6 +57,9 @@
                                 </div>
                             </div>
                         @endfor
+                    </div>
+                    <div class="mt-4 d-flex justify-content-center">
+                        {{ $pesantren->links() }}
                     </div>
                 </div>
             </div>

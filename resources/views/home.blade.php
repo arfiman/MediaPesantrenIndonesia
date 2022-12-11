@@ -16,7 +16,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-6 text-center py-3 mx-auto">
                 <img class="" src="{{ url('images/santri.jpg') }}"
-                    style="height: 95%; width: 100%; overflow: hidden; object-fit: cover;">
+                    style="height: 70%; width: 100%; overflow: hidden; object-fit: cover;">
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
     <div id="landing-overview" class="content-bg-2 py-5">
         <div class="container row mx-auto">
             <div class="col-md-6 text-center my-4 py-auto">
-                <img class="col-10 mx-auto" src="{{ url('images/santri.jpg') }}"
+                <img class="col-10 mx-auto" src="{{ url('images/santri2.jpg') }}"
                     style="height: auto; width: 90%; overflow: hidden; object-fit: cover;">
             </div>
 

@@ -31,7 +31,7 @@ class EditController extends Controller
         }
 
         $pesantren = $pesantren->first();
-        $foto = FotoPesantren::where('pesantrenid', $id)->get();
+        $foto = FotoPesantren::where('pesantrenid', $id)->paginate(5);
         $potensi_pesantren = DB::table('potensi_pesantren')
         ->select('potential.name')
         ->where('potensi_pesantren.pesantrenid', $id)

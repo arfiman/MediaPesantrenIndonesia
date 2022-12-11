@@ -33,8 +33,9 @@
         <header class="header-bg sticky-top">
             <nav class="navbar navbar-expand-md shadow-sm navbar-bg text-white">
                 <div class="container">
-                    <a class="navbar-brand" href="/">
-                        <img src="{{ url('images/logo.png') }}" alt="MediaPesantrenIndonesia" height="40">
+                    <a class="navbar-brand collapse navbar-collapse justify-content-start" href="/">
+                        <img class="flex" src="{{ url('images/logo-png.png') }}" alt="MediaPesantrenIndonesia" height="40">
+                        <h5 class="text-white ms-3 mt-2">Media Pesantren Indonesia</h5>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
@@ -108,20 +109,20 @@
                     <div class="col-6 col-md-2 mb-3">
                         <h6>Media Pesantren Indonesia</h6>
                         <ul class="nav flex-column text-light" style="font-size: 15px;">
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Home</a>
+                            <li class="nav-item mb-2"><a href="/" class="nav-link p-0 text-secondary">Home</a>
                             </li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Cari Pesantren</a>
+                            <li class="nav-item mb-2"><a href="/pesantren" class="nav-link p-0 text-secondary">Cari Pesantren</a>
                             </li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">Tambah Pesantren</a></li>
+                            <li class="nav-item mb-2"><a href="/upload" class="nav-link p-0 text-secondary">Tambah Pesantren</a></li>
                         </ul>
                     </div>
 
                     <div class="col-6 col-md-2 mb-3">
                         <h6>Contact Us</h6>
                         <ul class="nav flex-column text-light" style="font-size: 15px;">
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">+6287712345678</a>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">+62</a>
                             </li>
-                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">+62212345</a>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-secondary">+62</a>
                             </li>
                         </ul>
                     </div>
