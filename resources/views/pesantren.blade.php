@@ -40,23 +40,23 @@
             <div class="content-bg">
                 <div class="container col-12 col-md-10 py-5">
                     <div class="row mt-5">
-                        @for ($i = 0; $i < count($pesantren); $i++)
+                        @foreach ($pesantren as $p)
                             <div class="card col-12 col-sm-6 col-md-4 m-2 px-0 border-0">
-                                @empty($img[$i])
+                                @empty($p->img)
                                     <img src="{{ url('images/santri.jpg') }}" class="card-img-top mx-0" alt="modul card">
                                 @endempty
-                                @isset($img[$i])
-                                    <img src="{{ asset('storage/' . $img[$i]) }}" class="card-img-top mx-0" alt="modul card">
+                                @isset($p->img)
+                                    <img src="{{ asset('storage/' . $p->img) }}" class="card-img-top mx-0" alt="modul card">
                                 @endisset
                                 <div class="card-body bg-dark bg-gradient text-light">
-                                    <h5 class="card-title">{{ $pesantren[$i]->nama }}</h5>
+                                    <h5 class="card-title">{{ $p->nama }}</h5>
                                     <p class="card-text">
-                                        {{ $pesantren[$i]->name }}
+                                        {{ $p->name }}
                                     </p>
-                                    <a href="/pesantren/view/{{ $pesantren[$i]->p_id }}" class="stretched-link"></a>
+                                    <a href="/pesantren/view/{{ $p->p_id }}" class="stretched-link"></a>
                                 </div>
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
                     <div class="mt-4 d-flex justify-content-center">
                         {{ $pesantren->links() }}

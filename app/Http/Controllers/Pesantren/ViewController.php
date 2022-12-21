@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Pesantren;
 
-use App\FotoPesantren;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Pesantren;
-use App\Potential;
 use App\Province;
 use Illuminate\Support\Facades\DB;
 
@@ -27,52 +24,37 @@ class ViewController extends Controller
         $keyword = $request->keyword;
         $provinsiid = $request->prov;
 
-        $pesantren = DB::table('pesantren')
-        ->where('nama', 'like', "%".$keyword."%")
-        ->where('provinsiid', '=', $provinsiid)
-        ->get();
+        $img = DB::table('foto_pesantren')
+        ->select('pesantrenid', DB::raw('MAX(img) as img'))
+        ->groupBy('pesantrenid');
 
         if($provinsiid == null){
-            $provinsiid = 1;
-            $pesantren = DB::table('pesantren')
-            ->where('nama', 'like', "%".$keyword."%")
-            ->get();
 
             $pesantrenview = DB::table('pesantren')
             ->where('nama', 'like', "%".$keyword."%")
-            ->select('pesantren.id as p_id', 'pesantren.nama', 'province.name')
+            ->select('pesantren.id as p_id', 'pesantren.nama', 'province.name', 'img')
             ->join('province', 'pesantren.provinsiid', '=', 'province.id')
+            ->leftJoinSub($img, 'img', function($join){
+                $join->on('pesantren.id', '=', 'img.pesantrenid');
+            })
             ->paginate(9);
         } else {
-            $pesantren = DB::table('pesantren')
-            ->where('nama', 'like', "%".$keyword."%")
-            ->where('provinsiid', '=', $provinsiid)
-            ->get();
 
             $pesantrenview = DB::table('pesantren')
             ->where('nama', 'like', "%".$keyword."%")
             ->where('provinsiid', '=', $provinsiid)
-            ->select('pesantren.id as p_id', 'pesantren.nama', 'province.name')
+            ->select('pesantren.id as p_id', 'pesantren.nama', 'province.name', 'img')
             ->join('province', 'pesantren.provinsiid', '=', 'province.id')
+            ->leftJoinSub($img, 'img', function($join){
+                $join->on('pesantren.id', '=', 'img.pesantrenid');
+            })
             ->paginate(9);
         }
 
 
 
-        $img = [];
-        foreach ($pesantren as $p) {
-            $strtemp = DB::table('foto_pesantren')->where("pesantrenid", '=', $p->id)->first();
-            if($strtemp == null){
-                $strtemp = 'foto_pesantren/pesantren1.jpg';
-            } else {
-                $strtemp = $strtemp->img;
-            }
-            array_push($img, $strtemp);
-        }
-
         $provinsi = Province::get();
-        // $potensi = Potential::get();
 
-        return view('pesantren', ['pesantren'=>$pesantrenview, 'img'=>$img, 'provinsi'=>$provinsi, 'provinsiid'=>$provinsiid, 'keyword'=>$keyword]);
+        return view('pesantren', ['pesantren'=>$pesantrenview, 'provinsi'=>$provinsi, 'provinsiid'=>$provinsiid, 'keyword'=>$keyword]);
     }
 }
